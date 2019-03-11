@@ -7,9 +7,9 @@
                     <label for="speed">game speed (ms)</label>
                     <input type="number"
                            id="speed"
-                           placeholder="Задайте интервал появления цвета"
+                           placeholder="please, set game speed"
                            v-model.number="speed"
-
+                           @input="checkNums"
                            class="form-control">
                 </div>
                 <div class="form-group col-md-3">
@@ -31,7 +31,7 @@
                     <button type="button"
                             class="btn btn-success"
                             @click="stopGame"
-                             v-else="isPlaying">stop
+                             v-else>stop
                     </button>
                 </div>
             </div>
@@ -71,6 +71,13 @@
             getCurrent(arr) {
                 return arr[Math.floor(Math.random() * arr.length)]
             },
+
+            checkNums() {
+                if(this.speed < 0) {
+                    return this.speed = -this.speed
+                }
+            },
+
             startGame() {
                 this.gameStatus = 'Game is running';
                 let availableSquares = Array.from({length: this.squares}, (v, k) => k + 1);
@@ -100,7 +107,6 @@
               this.computerScore = [];
               clearTimeout(this.currentTimer);
               this.current = [];
-
             },
             userAction(event) {
                 let square = event.currentTarget;
